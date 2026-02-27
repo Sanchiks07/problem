@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('daily_reflection_responses', function (Blueprint $table) {
+        Schema::create('action_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->date('date');
-            $table->json('responses'); // responses in order of the questions
+            $table->string('type');
+            $table->string('action');
+            $table->text('details')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('daily_reflection_responses');
+        Schema::dropIfExists('action_logs');
     }
 };

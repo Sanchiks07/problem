@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
-            $table->string('status'); // pending, in_progress, completed, failed
+            $table->string('status')->default('pending'); // pending, in_progress, completed, failed
             $table->string('emotional_weight'); // light, medium, heavy, overwhelming
             $table->date('due_date');
             $table->timestamps();

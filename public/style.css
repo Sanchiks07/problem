@@ -783,6 +783,30 @@ input[type="date"] {
     margin-bottom: 40px;
 }
 
+/* create first task */
+.no-tasks {
+    display: flex;
+    gap: 20px;
+    color: white;
+    align-items: center;
+}
+
+.no-tasks a {
+    text-decoration: none;
+    background-color: #c76b98;
+    padding: 8px 20px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.no-tasks a:hover {
+    background-color: #f09f9c;
+    transform: translateY(-2px);
+}
+
 /* ---------- TASK STEPS ---------- */
 .task-steps {
     background: #ffffff0d;
@@ -884,6 +908,12 @@ input[type="date"] {
 .anchor-box button:hover {
     background-color: #c76b98;
     transform: translateY(-2px);
+}
+
+#anchor-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* ---------- DAILY REFLECTIONS ---------- */
@@ -1188,6 +1218,20 @@ input[type="date"] {
 /* scroll fix */
 .fc {
     background: transparent;
+}
+
+/* ---------- ERRORS ---------- */
+.error-messages {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+.error-messages ul {
+    margin: 0;
+    padding-left: 20px;
 }
 
 /* ---------- RESPONSIVE DESIGN ---------- */

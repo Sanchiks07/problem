@@ -15,8 +15,7 @@ class TaskStep extends Model
         'steps' => 'json',
     ];
 
-    public function task()
-    {
+    public function task() {
         return $this->belongsTo(Task::class);
     }
 }

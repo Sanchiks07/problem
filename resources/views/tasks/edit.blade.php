@@ -10,6 +10,16 @@
             
             <h1>Edit Task</h1>
 
+            @if ($errors->any())
+                <div class="error-messages">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <input type="text" id="title" name="title" value="{{ old('title', $task->title) }}" required>
             <select id="emotional_weight" name="emotional_weight" required>
                 <option value="" selected disabled>Select Emotional Weight</option>

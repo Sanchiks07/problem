@@ -13,4 +13,8 @@ class Task extends Model
         'emotional_weight',
         'due_date',
     ];
+
+    public function steps() {
+        return $this->hasOne(TaskStep::class); // one task → one TaskStep
+    }
 }

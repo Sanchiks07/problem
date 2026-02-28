@@ -22,39 +22,36 @@ function startTask(taskId, redirectUrl) {
 }
 
 
-// daily reflection popup logic
 document.addEventListener('DOMContentLoaded', function() {
     const popup = document.getElementById('daily-reflection-popup');
     if (!popup) return;
 
     const todayKey = `dailyReflectionShown-${new Date().toLocaleDateString()}`;
 
-    // if already shown/submitted today, do nothing
     if (localStorage.getItem(todayKey)) return;
 
-    // Pick a random time between 18:00 and 20:00
     const now = new Date();
     const start = new Date();
     start.setHours(18, 0, 0, 0); // 18:00
     const end = new Date();
     end.setHours(20, 0, 0, 0); // 20:00
 
-    // if current time is past end, just show immediately
-    const minDelay = now < start ? start.getTime() - now.getTime() : 0;
-    const maxDelay = now < end ? end.getTime() - now.getTime() : 0;
-    const delay = maxDelay > 0 ? minDelay + Math.floor(Math.random() * maxDelay) : 0;
+    // only proceed if current time is within 18:00-20:00
+    if (now < start || now > end) return;
+
+    // pick random delay between now and 20:00
+    const maxDelay = end.getTime() - now.getTime();
+    const delay = Math.floor(Math.random() * maxDelay);
 
     setTimeout(() => {
-        popup.classList.add('show'); // fade in
+        popup.classList.add('show');
         popup.style.display = 'flex';
 
         const closeBtn = document.getElementById('daily-popup-close');
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
-                popup.classList.remove('show'); // fade out
-                setTimeout(() => {
-                    popup.style.display = 'none';
-                }, 500);
+                popup.classList.remove('show');
+                setTimeout(() => { popup.style.display = 'none'; }, 500);
                 localStorage.setItem(todayKey, 'true');
             });
         }

@@ -40,7 +40,7 @@ class RealityAnchorsController extends Controller
     public static function save(Request $request) {
         $data = $request->validate([
             'chosen_question' => 'required|string',
-            'response' => 'nullable|string',
+            'response' => 'nullable|string|max:500',
         ]);
 
         RealityAnchorResponse::create([

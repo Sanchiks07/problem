@@ -8,7 +8,11 @@
             <h1>My Tasks</h1>
 
             @if($tasks->isEmpty())
-                <p>You have no tasks yet. <a href="{{ route('tasks.create') }}">Create your first task</a>.</p>
+            <div class="no-tasks">
+                <p>You have no tasks yet.</p>
+                <a href="{{ route('tasks.create') }}">Create your first task</a>
+            </div>
+                
             @else
                 <div class="task-action-btns">
                     <button onClick="window.location.href='{{ route('tasks.create') }}'">Create New Task</button>
@@ -25,7 +29,7 @@
                             <div class="action-btns">
                                 <div class="task-edit-btns">
                                     <a onclick="event.stopPropagation();" href="{{ route('tasks.edit', $task->id) }}">Edit Task</a>
-                                    <a onclick="event.stopPropagation();" href="{{ route('steps.edit', $task->id) }}">Edit Steps</a>
+                                    <a onclick="event.stopPropagation();" href="{{ route('steps.edit', $task->steps->id) }}">Edit Steps</a>
                                 </div>
 
                                 <form action="{{ route('tasks.delete', $task->id) }}" method="POST" onClick="event.stopPropagation(); return confirm('Are you sure you want to delete this task?');">
@@ -53,6 +57,16 @@
             <div class="anchors-container">
                 <h2>Reality Anchor</h2>
 
+                @if ($errors->any())
+                            <div class="error-messages">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                 @if($anchorQuestion)
                     <div class="anchor-box">
                         <p>{{ $anchorQuestion }}</p>
@@ -64,7 +78,8 @@
                                 @csrf
 
                                 <input type="hidden" name="chosen_question" value="{{ $anchorQuestion }}">
-                                <textarea type="text" name="response" placeholder="Your answer (optional)"></textarea><br>
+                                <textarea type="text" name="response" placeholder="Your answer (optional)">{{ old('response') }}</textarea><br>
+
                                 <button type="submit">Save Answer</button>
                             </form>
                         @endif

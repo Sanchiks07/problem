@@ -16,7 +16,7 @@ class TaskStepsController extends Controller
     public function store(Request $request) {
         $validatedData = $request->validate([
             'task_id' => 'required|integer|exists:tasks,id',
-            'steps' => 'required|string',
+            'steps' => 'required|string|max:1000',
         ]);
 
         $stepsArray = array_filter(
@@ -57,7 +57,7 @@ class TaskStepsController extends Controller
     public function update(Request $request, $id){
         $validatedData = $request->validate([
             'task_id' => 'required|integer|exists:tasks,id',
-            'steps' => 'required|string',
+            'steps' => 'required|string|max:1000',
         ]);
 
         $stepsArray = array_filter(

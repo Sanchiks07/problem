@@ -13,20 +13,17 @@ use App\Models\ActionLog;
 class TasksController extends Controller
 {
     public function index() {
-        $tasks = Task::where('user_id', auth()->id())
-                    ->whereNotIn('status', ['failed', 'completed'])
-                    ->get();
+        $tasks = Task::where('user_id', auth()->id())->whereNotIn('status', ['failed', 'completed'])->with('steps')->get();
 
         // makes sure any overdue tasks are marked as failed
         foreach($tasks as $task) {
-            if(Carbon::now()->gt(Carbon::parse($task->due_date)) && !in_array($task->status, ['completed','in_progress'])) {
+            $taskDue = Carbon::parse($task->due_date);
+            if($taskDue->lt(Carbon::today()) && !in_array($task->status, ['completed','in_progress'])) {
                 $task->update(['status' => 'failed']);
             }
         }
 
-        $failedTasks = Task::where('user_id', auth()->id())
-                            ->where('status', 'failed')
-                            ->get();
+        $failedTasks = Task::where('user_id', auth()->id())->where('status', 'failed')->get();
 
         $affirmationText = null;
         $affirmationRow = Affirmation::first();
@@ -51,7 +48,7 @@ class TasksController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:20',
             'emotional_weight' => 'required|string|in:low,medium,high,overwhelming',
-            'due_date' => 'required|date',
+            'due_date' => 'required|date|after_or_equal:today',
         ]);
 
         $validatedData['user_id'] = auth()->id();
@@ -83,7 +80,7 @@ class TasksController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:20',
             'emotional_weight' => 'required|string|in:low,medium,high,overwhelming',
-            'due_date' => 'required|date',
+            'due_date' => 'required|date|after_or_equal:today',
         ]);
 
         $task->update($validatedData);
@@ -160,7 +157,7 @@ class TasksController extends Controller
         $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
 
         $request->validate([
-            'due_date' => 'required|date|after:today',
+            'due_date' => 'required|date|after_or_equal:today',
         ]);
 
         $task->update([

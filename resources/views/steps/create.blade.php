@@ -10,8 +10,18 @@
             <h1>Add Steps to Your Task</h1>
             <p>Write each step of your task on a new line.</p>
 
+            @if ($errors->any())
+                <div class="error-messages">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <input type="hidden" name="task_id" value="{{ $task_id }}">
-            <textarea name="steps" placeholder="Step 1&#10;Step 2&#10;Step 3" required></textarea><br>
+            <textarea name="steps" placeholder="Step 1&#10;Step 2&#10;Step 3" required>{{ old('steps', implode("\n", $steps)) }}</textarea><br>
 
             <button type="submit">Save Steps & View Task</button>
         </form>

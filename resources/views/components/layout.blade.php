@@ -20,26 +20,26 @@
 
     <!-- daily reflection popup -->
     @php
-        $hour = \Carbon\Carbon::now()->hour;
         $currentRoute = request()->route()->getName();
         $excludedRoutes = ['tasks.create', 'steps.create', 'steps.show', 'home', 'login', 'register', 'logout'];
-        $showPopup = !in_array($currentRoute, $excludedRoutes) && $hour >= 18 && $hour <= 20 && empty($dailyResponses ?? []);
+        $showPopup = !in_array($currentRoute, $excludedRoutes) && empty($dailyResponses ?? []);
     @endphp
 
     @if($showPopup)
-        <div id="daily-reflection-popup">
+        <div id="daily-reflection-popup" style="display:none;">
             <h2>Daily Reflection</h2>
+            
             <form action="{{ route('dailyReflections.save') }}" method="POST">
                 @csrf
 
                 @foreach($dailyQuestions as $index => $question)
                     <p>{{ $question }}</p>
-                    <textarea name="responses[{{ $index }}]" required style="width:100%;"></textarea>
+                    <textarea name="responses[{{ $index }}]" required></textarea>
                 @endforeach
                 <br>
 
                 <button type="submit">Save</button>
-                <button type="button" onclick="document.getElementById('daily-reflection-popup').style.display='none'">Close</button>
+                <button type="button" id="daily-popup-close">Close</button>
             </form>
         </div>
     @endif

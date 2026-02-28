@@ -42,4 +42,43 @@ class TaskStepsController extends Controller
 
         return view('steps.show', ['task' => $task, 'steps' => $steps, 'currentIndex' => $currentIndex]);
     }
+
+    public function edit($id) {
+        $taskStep = TaskStep::where('id', $id)
+                            ->whereHas('task', function($query) {
+                                $query->where('user_id', auth()->id());
+                            })->firstOrFail();
+
+        $stepsText = implode("\n", $taskStep->steps);
+
+        return view('steps.edit', ['taskStep' => $taskStep, 'task' => $taskStep->task, 'steps' => $taskStep->steps, 'task_id' => $taskStep->task_id, 'stepsText' => $stepsText]);
+    }
+
+    public function update(Request $request, $id){
+        $validatedData = $request->validate([
+            'task_id' => 'required|integer|exists:tasks,id',
+            'steps' => 'required|string',
+        ]);
+
+        $stepsArray = array_filter(
+            array_map('trim', explode("\n", $validatedData['steps']))
+        );
+
+        $taskStep = TaskStep::where('id', $id)
+                            ->whereHas('task', function($query) {
+                                $query->where('user_id', auth()->id());
+                            })->firstOrFail();
+
+        $taskStep->update(['steps' => $stepsArray]);
+
+        // logs steps update
+        ActionLog::create([
+            'user_id' => auth()->id(),
+            'type' => 'task steps',
+            'action' => 'updated',
+            'details' => $taskStep->task->title,
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
 }

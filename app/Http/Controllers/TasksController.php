@@ -69,6 +69,52 @@ class TasksController extends Controller
         return redirect()->route('steps.create', ['task_id' => $task->id]);
     }
 
+    public function edit($id) {
+        $id = request()->route('id');
+
+        $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+        return view('tasks.edit', ['task' => $task]);
+    }
+
+    public function updateTask(Request $request, $id) {
+        $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:20',
+            'emotional_weight' => 'required|string|in:low,medium,high,overwhelming',
+            'due_date' => 'required|date',
+        ]);
+
+        $task->update($validatedData);
+
+        // log task update
+        ActionLog::create([
+            'user_id' => auth()->id(),
+            'type' => 'task',
+            'action' => 'updated',
+            'details' => $task->title,
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
+
+    public function destroy() {
+        $task = Task::where('id', request()->id)->where('user_id', auth()->id())->firstOrFail();
+        $task->delete();
+
+        // log task deletion
+        ActionLog::create([
+            'user_id' => auth()->id(),
+            'type' => 'task',
+            'action' => 'deleted',
+            'details' => $task->title,
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
+
+    // functions for starting, completing, failing, updating due date, and deleting failed tasks
     public function start($id) {
         $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
         if($task->status === 'pending') {
@@ -110,7 +156,7 @@ class TasksController extends Controller
         return view('tasks.failed', compact('failedTasks'));
     }
 
-    public function update(Request $request, $id) {
+    public function updateDueDate(Request $request, $id) {
         $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
 
         $request->validate([
@@ -122,29 +168,29 @@ class TasksController extends Controller
             'status' => 'pending',
         ]);
 
-        // logs task update
+        // logs failed task update
         ActionLog::create([
             'user_id' => auth()->id(),
-            'type' => 'task',
-            'action' => 'due_date_updated',
+            'type' => 'failed task',
+            'action' => 'due date updated',
             'details' => $task->title . ' → ' . $task->due_date,
         ]);
 
-        return redirect()->route('tasks.failed')->with('success', 'Due date updated successfully.');
+        return redirect()->route('tasks.failed');
     }
 
-    public function destroy($id) {
+    public function destroyFailed($id) {
         $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
         $task->delete();
 
         // logs task deletion
         ActionLog::create([
             'user_id' => auth()->id(),
-            'type' => 'task',
+            'type' => 'failed task',
             'action' => 'deleted',
             'details' => $task->title,
         ]);
 
-        return redirect()->route('tasks.failed')->with('success', 'Task deleted successfully.');
+        return redirect()->route('tasks.failed');
     }
 }

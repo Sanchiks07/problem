@@ -16,6 +16,9 @@ class CalendarController extends Controller
 
         $reflections = DailyReflectionResponse::where('user_id', $userId)->get();
 
-        return view('calendar.index', compact('tasks', 'reflections'));
+        $reflection = \App\Models\DailyReflection::first();
+        $questions = $reflection ? $reflection->questions : [];
+
+        return view('calendar.index', compact('tasks', 'reflections', 'questions'));
     }
 }

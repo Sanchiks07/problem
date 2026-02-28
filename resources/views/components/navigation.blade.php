@@ -2,7 +2,7 @@
 <nav class="navigation">
     <ul class="nav-left">
         @guest
-            <li style="margin-left:60px;"><a href="#about">About</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="#reviews">Reviews</a></li>
         @endguest
 
@@ -14,12 +14,18 @@
     </ul>
 
     <div class="nav-center">
-        <a href="#introduction" id="web-name">BrainSpace</a>
+        @guest
+            <a href="#introduction" id="web-name">BrainSpace</a>
+        @endguest
+
+        @auth
+            <a href="{{ route ('tasks.index') }}" id="web-name">BrainSpace</a>
+        @endauth
     </div>
 
     <ul class="nav-right">
         @guest
-            <li style="margin-right:60px;"><a href="{{ route('login') }}">Login</a></li>
+            <li><a href="{{ route('login') }}">Login</a></li>
         @endguest
 
         @auth

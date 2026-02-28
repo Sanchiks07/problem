@@ -14,4 +14,9 @@ class TaskStep extends Model
     protected $casts = [
         'steps' => 'json',
     ];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }

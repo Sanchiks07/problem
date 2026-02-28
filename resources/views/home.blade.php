@@ -7,10 +7,10 @@
                 <p>Your personal space for managing and organizing your thoughts and ideas.</p>
                 <a href="#about" class="introduction-btn">Learn More</a>
             </div>
-        </div>
+        </section>
 
         <!-- About Section -->
-        <div id="about" class="about-section">
+        <section id="about" class="about-section">
             <h2>About BrainSpace</h2>
             <p>BrainSpace is your personal hub for ideas, tasks, and inspiration. Organize your thoughts, track your progress, and unlock your productivity with a clean, intuitive interface that keeps you focused on what matters most.</p>
             <div class="features">
@@ -27,14 +27,14 @@
                     <p>Discover ways to spark creativity and enhance your productivity.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Register Section -->
         <section id="register" class="register-section">
             <h2>Ready to get started?</h2>
             <p>Create your BrainSpace account today and take control of your thoughts.</p>
             <a href="{{ route('register') }}" class="register-btn">Register</a>
-        </div>
+        </section>
 
         <!-- Reviews Section -->
         <section id="reviews" class="reviews-section">
@@ -57,6 +57,6 @@
                     <span>- Morgan L.</span>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </x-layout>

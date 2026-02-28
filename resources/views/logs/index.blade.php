@@ -4,8 +4,7 @@
     </x-slot:title>
 
     <div class="main-container">
-        <h1>Action Log (Last 24 Hours)</h1>
-        <button onClick="window.location.href='{{ route('tasks.index') }}'">Back to Tasks</button>
+        <h1 class="log-title">Action Log (Last 24 Hours)</h1>
 
         @if($logs->isEmpty())
             <p>No activity in the last 24 hours.</p>

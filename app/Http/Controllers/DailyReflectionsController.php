@@ -10,11 +10,11 @@ use App\Models\DailyReflectionResponse;
 class DailyReflectionsController extends Controller
 {
     public static function show() {
-        $reflection = DailyReflections::first();
+        $reflection = DailyReflection::first();
         $questions = $reflection ? $reflection->questions : [];
 
         $today = Carbon::today()->toDateString();
-        $responseRow = DailyReflectionsResponse::where('user_id', auth()->id())
+        $responseRow = DailyReflectionResponse::where('user_id', auth()->id())
                         ->where('date', $today)
                         ->first();
 
@@ -30,7 +30,7 @@ class DailyReflectionsController extends Controller
 
         $today = Carbon::today()->toDateString();
 
-        DailyReflectionsResponse::updateOrCreate(
+        DailyReflectionResponse::updateOrCreate(
             [
                 'user_id' => auth()->id(),
                 'date' => $today,

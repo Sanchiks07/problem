@@ -6,7 +6,6 @@
     <div class="main-container">
         <form action="{{ route('tasks.store') }}" method="POST" class="task-form">
             @csrf
-
             <h1>Create Task</h1>
 
             <input type="text" name="title" placeholder="Title" required><br>

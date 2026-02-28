@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\RealityAnchor;
 use App\Models\RealityAnchorResponse;
-use App\Http\Models\ActionLog;
+use App\Models\ActionLog;
 
 class RealityAnchorsController extends Controller
 {
@@ -52,7 +52,7 @@ class RealityAnchorsController extends Controller
         // logs reality anchor response
         ActionLog::create([
             'user_id' => auth()->id(),
-            'type' => 'anchor',
+            'type' => 'reality anchor',
             'action' => 'responded',
             'details' => $request->chosen_question . ' | ' . ($request->response ?? 'no answer'),
         ]);

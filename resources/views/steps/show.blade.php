@@ -5,14 +5,20 @@
 
     <div class="main-container">
         <div class="task-steps">
-            <h1>{{ $task->title }}</h1>
+            <h1 class="task-title">{{ $task->title }}</h1>
+            <p class="task-subtitle">One small step at a time.</p>
 
             @if(isset($steps[$currentIndex]))
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width:{{ (($currentIndex + 1) / count($steps)) * 100 }}%"></div>
+                </div>
+
                 <div class="current-step">
                     <p>{{ $steps[$currentIndex] }}</p>
                 </div>
 
-                <div class="step-navigation">
+                <div>
                     @if($currentIndex + 1 < count($steps))
                         <a href="{{ route('steps.show', $task->id) }}?step={{ $currentIndex + 1 }}">
                             <button>Next Step</button>
@@ -24,6 +30,7 @@
                         </form>
                     @endif
                 </div>
+
             @else
                 <p>No steps found.</p>
             @endif

@@ -3,7 +3,7 @@
         Register
     </x-slot:title>
     
-    <div class="main-container">
+    <div class="auth-container">
         <div class="auth-page">
             <div class="auth-image">
                 <a href="{{ route('home') }}">Back to website →</a>
@@ -11,6 +11,10 @@
             
             <form action="{{ route('register.store') }}" method="POST" class="auth-form">
                 @csrf
+
+                <div class="auth-back">
+                    <a href="{{ route('home') }}">Back to website →</a>
+                </div>
 
                 <h1>Register</h1>
                 <p>Already have an account? <a href="{{ route('login') }}">Login</a></p>

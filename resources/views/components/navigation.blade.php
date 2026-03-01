@@ -1,42 +1,50 @@
 @unless (request()->routeIs('login') || request()->routeIs('register'))
 <nav class="navigation">
-    <ul class="nav-left">
-        @guest
-            <li><a href="#about">About</a></li>
-            <li><a href="#reviews">Reviews</a></li>
-        @endguest
+    <div class="nav-container">
+        <div class="hamburger">
+            <img src="{{ asset('/images/menu.png') }}" class="material-icons" style="width:25px; height:auto;"></img>
+        </div>
 
-        @auth
-            <li><a href="{{ route('tasks.index') }}">My Tasks</a></li>
-            <li><a href="{{ route('calendar.index') }}">Calendar</a></li>
-            <li><a href="{{ route('logs.index') }}">Action Log</a></li>
-        @endauth
-    </ul>
+        <div class="nav-center">
+            @guest
+                <a href="#introduction" id="web-name">BrainSpace</a>
+            @endguest
 
-    <div class="nav-center">
-        @guest
-            <a href="#introduction" id="web-name">BrainSpace</a>
-        @endguest
-
-        @auth
-            <a href="{{ route ('tasks.index') }}" id="web-name">BrainSpace</a>
-        @endauth
+            @auth
+                <a href="{{ route('tasks.index') }}" id="web-name">BrainSpace</a>
+            @endauth
+        </div>
     </div>
 
-    <ul class="nav-right">
-        @guest
-            <li><a href="{{ route('login') }}">Login</a></li>
-        @endguest
+    <div class="nav-links">
+        <ul class="nav-left">
+            @guest
+                <li><a href="#about">About</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+            @endguest
 
-        @auth
-            <li style="cursor:default; color:white;">Welcome, {{ auth()->user()->name }}!</li>
-            <li>
-                <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-                    @csrf
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
-        @endauth
-    </ul>
+            @auth
+                <li><a href="{{ route('tasks.index') }}">My Tasks</a></li>
+                <li><a href="{{ route('calendar.index') }}">Calendar</a></li>
+                <li><a href="{{ route('logs.index') }}">Action Log</a></li>
+            @endauth
+        </ul>
+
+        <ul class="nav-right">
+            @guest
+                <li><a href="{{ route('login') }}">Login</a></li>
+            @endguest
+
+            @auth
+                <li style="cursor:default; color:white;">Welcome, {{ auth()->user()->name }}!</li>
+                <li>
+                    <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+            @endauth
+        </ul>
+    </div>
 </nav>
 @endunless

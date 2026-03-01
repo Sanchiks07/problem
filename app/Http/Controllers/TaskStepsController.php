@@ -10,7 +10,7 @@ use App\Models\ActionLog;
 class TaskStepsController extends Controller
 {
     public function create($task_id) {
-        return view('steps.create', ['task_id' => $task_id]);
+        return view('steps.create', ['task_id' => $task_id, 'steps' => []]);
     }
 
     public function store(Request $request) {

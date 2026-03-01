@@ -21,7 +21,7 @@
             @endif
 
             <input type="hidden" name="task_id" value="{{ $task_id }}">
-            <textarea name="steps" placeholder="Step 1&#10;Step 2&#10;Step 3" required>{{ old('steps', implode("\n", $steps)) }}</textarea><br>
+            <textarea name="steps" placeholder="Step 1&#10;Step 2&#10;Step 3" required>{{ old('steps', isset($steps) ? implode("\n", $steps) : '') }}</textarea><br>
 
             <button type="submit">Save Steps & View Task</button>
         </form>

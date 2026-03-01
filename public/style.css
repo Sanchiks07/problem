@@ -118,7 +118,7 @@ html {
     min-height: 100vh;
     width: 100%;
     color: white;
-    padding-top: 120px
+    padding-top: 60px
 }
 
 .main-home-container {
@@ -464,6 +464,7 @@ html {
     flex-direction: column;
     gap: 20px;
     color: white;
+    margin: auto 0;
 }
 
 .task-form h1 {
@@ -546,6 +547,7 @@ input[type="date"] {
     flex-direction: column;
     gap: 20px;
     color: white;
+    margin: auto 0;
 }
 
 .task-edit-form h1 {
@@ -795,6 +797,7 @@ input[type="date"] {
 
 .failed-title {
     margin-bottom: 40px;
+    padding-top: 50px;
 }
 
 /* create first task */
@@ -1108,6 +1111,7 @@ input[type="date"] {
 
 .log-title {
     margin-bottom: 40px;
+    padding-top: 50px;
 }
 
 .log-list li {
@@ -1142,7 +1146,7 @@ input[type="date"] {
     width: 100%;
     max-width: 1000px;
     min-height: 600px;
-    margin: 0 auto;
+    margin: 50px 0;
     background: linear-gradient(145deg, #632b6c, #270f36);
     padding: 30px;
     border-radius: 24px;
@@ -1314,6 +1318,16 @@ input[type="date"] {
 
     .nav-links.show {
         display: flex;
+        gap: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        border: 1px solid white;
+        border-radius: 10px;
+    }
+
+    .nav-right button {
+        font-weight: bold;
+        font-size: 20px;
     }
 
     .nav-links ul {
@@ -1338,6 +1352,11 @@ input[type="date"] {
     }
 
     .nav-links li a:hover, .nav-links li button:hover {
+        background-color: #4b1d67;
+        border-radius: 0;
+    }
+
+    .nav-links a:active {
         background-color: #4b1d67;
     }
 
@@ -1396,6 +1415,7 @@ input[type="date"] {
         padding-top: 40px;
     }
 
+    /* calendar */
     #calendar {
         margin: auto 0;
     }
@@ -1409,16 +1429,57 @@ input[type="date"] {
     }
 }
 
-/* laptops/desktops */
+/* laptops/desktops and large monitors */
 @media only screen and (min-width: 992px) {
     .auth-back {
         display: none;
     }
-}
 
-/* large monitors */
-@media only screen and (min-width: 1200px) {
-    .auth-back {
+    .hamburger {
         display: none;
     }
+
+    .navigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+    }
+
+    .nav-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+
+    .nav-links {
+        display: flex !important;
+        align-items: center;
+        width: 100%;
+        position: static;
+        background: none;
+    }
+
+    .nav-left, .nav-right {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-left li {
+        width: 100px;
+    }
+
+    .nav-left {
+        flex: 0;
+        justify-content: flex-start;
+    }
+
+    .nav-right {
+        flex: 1;
+        justify-content: flex-end;
+    }
+}
 }
